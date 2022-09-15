@@ -1,3 +1,5 @@
+// Route the request to a particular function
+
 import { Controller, Get, Post, Body, Param } from '@nestjs/common';
 import { CreateMessageDto } from './dtos/create-message.dto';
 
