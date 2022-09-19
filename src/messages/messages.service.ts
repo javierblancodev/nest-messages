@@ -1,18 +1,24 @@
-import { readFile, writeFile } from 'fs/promises'; // from the node standard library
+import { MessagesRepository } from "./messages.repository";
 
-export class MessagesRepository {
-    async findOne(id: string) {
-        const contents = await readFile('messages.json', 'utf8'); // returns the content of the file, which is in utf-8 format, as a string
-        const messages = JSON.parse(contents); // parse a json-formatted string and transform it into an js object
-        
-        return messages[id];
+export class MessagesService {
+
+    messagesRepo: MessagesRepository;
+
+    constructor() {
+        // Service is creating its own dependencies
+        // DO NOT THIS IN REAL APPS BUT USE DEPENDENCY INJECTION
+        this.messagesRepo = new MessagesRepository();
     }
 
-    async findAll() {
-
+    findOne(id: string) {
+        return this.messagesRepo.findOne(id);
     }
 
-    async create(message: string) {
+    findAll() {
+        return this.messagesRepo.findAll();
+    }
 
+    create(content: string) {
+        return this.messagesRepo.create(content);
     }
 }
