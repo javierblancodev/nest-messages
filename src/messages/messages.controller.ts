@@ -1,6 +1,6 @@
 // Route the request to a particular function
 
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, NotFoundException } from '@nestjs/common';
 import { CreateMessageDto } from './dtos/create-message.dto';
 import { MessagesService } from './messages.service';
 
@@ -27,8 +27,14 @@ export class MessagesController {
     }
 
     @Get('/:id')
-    getMessages(@Param('id') id: string) {
+    async getMessages(@Param('id') id: string) {
         // console.log(id);
-        return this.messagesService.findOne(id);
+        const message = await this.messagesService.findOne(id);
+    
+        if(message == undefined) { 
+            throw new NotFoundException('Message not found!');
+        }
+        
+        return message;
     }
 }
