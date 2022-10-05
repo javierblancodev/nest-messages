@@ -6,13 +6,16 @@ import { MessagesService } from './messages.service';
 
 @Controller('messages')
 export class MessagesController {
-
-    messagesService: MessagesService;
-
-    constructor() {
-        // DO NOT USE THIS IN REAL APP
+    // we do not have to add this class to the DI container since this class is not a dependency but consume dependencies
+    constructor(public messagesService: MessagesService) {
+        // DO NOT USE THIS APPROACH IN THE NEXT LINE
+        // this.messagesService = new MessagesService(); // Bad practice that break the IoC principle
         // USE DEPENDENCY INJECTION
-        this.messagesService = new MessagesService();
+        // Inversion of control: principle that states that a class can not create an instance of another class
+        // Inversion of control: guarantee reusability 
+        // Dependency Injection (DI): principle where a ahead of time created instance of other class has been created
+        // and is injected in a class to guarantee the inversion of control principal
+        // Nest DI container: Object that create the dependencies of a class when a class needs to be instanciate
     }
 
     @Get()

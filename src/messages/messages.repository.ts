@@ -1,6 +1,9 @@
+import { Injectable } from '@nestjs/common';
 import { readFile, writeFile } from 'fs/promises'; // from the node standard library
 
+@Injectable() // the injection decorator mark this class for registration in the DI container
 export class MessagesRepository {
+    // we also need to add this dependency as a provider in the messagesModule
     async findOne(id: string) {
         const contents = await readFile('messages.json', 'utf8'); // returns the content of the file, which is in utf-8 format, as a string
         const messages = JSON.parse(contents); // parse a json-formatted string and transform it into an js object
